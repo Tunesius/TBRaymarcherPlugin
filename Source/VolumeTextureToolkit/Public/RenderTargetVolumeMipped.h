@@ -2,7 +2,7 @@
 #include "CoreMinimal.h"
 #include "Engine/TextureRenderTargetVolume.h"
 #include "UObject/ObjectMacros.h"
-
+#include "TextureResource.h"
 #include "RenderTargetVolumeMipped.generated.h"
 
 class FTexture3DComputeResource;
@@ -161,19 +161,19 @@ public:
 	}
 
 	/** Returns the width of the texture in pixels. */
-	virtual uint32 GetSizeX() const override
+	virtual uint32 GetSizeX() const
 	{
 		return SizeX;
 	}
 
 	/** Returns the height of the texture in pixels. */
-	virtual uint32 GetSizeY() const override
+	virtual uint32 GetSizeY() const
 	{
 		return SizeY;
 	}
 
 	/** Returns the depth of the texture in pixels. */
-	virtual uint32 GetSizeZ() const override
+	virtual uint32 GetSizeZ() const
 	{
 		return SizeZ;
 	}
@@ -203,7 +203,7 @@ public:
 	ESamplerFilter SamplerFilter;
 
 	/** A reference to the texture's RHI resource as a texture 3D. */
-	FTexture3DRHIRef RenderTargetTextureRHI;
+	FTextureRHIRef RenderTargetTextureRHI;
 
 	FTextureReference* TextureReference;
 

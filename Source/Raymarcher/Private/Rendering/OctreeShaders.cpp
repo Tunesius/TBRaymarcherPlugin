@@ -4,7 +4,6 @@
 // (original raymarching code).
 
 #include "Rendering/OctreeShaders.h"
-
 #include "Engine/TextureRenderTargetVolume.h"
 #include "Runtime/RenderCore/Public/RenderUtils.h"
 #include "Util/UtilityShaders.h"

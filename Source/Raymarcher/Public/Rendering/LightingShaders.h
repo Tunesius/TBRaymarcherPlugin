@@ -12,6 +12,7 @@
 #include "Rendering/RaymarchTypes.h"
 #include "ShaderParameterUtils.h"
 #include "ShaderParameters.h"
+#include "RenderResource.h"
 #include "VolumeAsset/WindowingParameters.h"
 
 void AddDirLightToSingleLightVolume_RenderThread(FRHICommandListImmediate& RHICmdList, FBasicRaymarchRenderingResources Resources,
@@ -73,8 +74,8 @@ public:
 		SetShaderValue(RHICmdList, ShaderRHI, bAdded, bLightAdded ? 1 : -1);
 	}
 
-	void SetRaymarchResources(FRHICommandListImmediate& RHICmdList, FRHIComputeShader* ShaderRHI, const FTexture3DRHIRef pVolume,
-		const FTexture2DRHIRef pTransferFunc, FWindowingParameters WindowingParams)
+	void SetRaymarchResources(FRHICommandListImmediate& RHICmdList, FRHIComputeShader* ShaderRHI, const FTextureRHIRef pVolume,
+		const FTextureRHIRef pTransferFunc, FWindowingParameters WindowingParams)
 	{
 		// Set the zero color to fit the zero point of the windowing parameters (Center - Width/2)
 		// so that after sampling out of bounds, it gets changed to 0 on the Transfer Function in
@@ -97,8 +98,11 @@ public:
 	void SetRaymarchParameters(FRHICommandListImmediate& RHICmdList, FRHIComputeShader* ShaderRHI,
 		FClippingPlaneParameters LocalClippingParams, FLinearColor pWindowingParameters)
 	{
-		SetShaderValue(RHICmdList, ShaderRHI, LocalClippingCenter, FVector3f(LocalClippingParams.Center));
-		SetShaderValue(RHICmdList, ShaderRHI, LocalClippingDirection, FVector3f(LocalClippingParams.Direction));
+
+		//SetShaderValue(RHICmdList, ShaderRHI, LocalClippingCenter, FVector3f(LocalClippingParams.Center));
+		SetShaderValue(RHICmdList, ShaderRHI, LocalClippingCenter, FVector3d(LocalClippingParams.Center));
+		//SetShaderValue(RHICmdList, ShaderRHI, LocalClippingDirection, FVector3f(LocalClippingParams.Direction));
+		SetShaderValue(RHICmdList, ShaderRHI, LocalClippingDirection, FVector3d(LocalClippingParams.Direction));
 		SetShaderValue(RHICmdList, ShaderRHI, WindowingParameters, pWindowingParameters);
 	}
 
@@ -111,7 +115,7 @@ public:
 
 	// Sets loop-dependent uniforms in the pipeline.
 	void SetLoop(FRHICommandListImmediate& RHICmdList, FRHIComputeShader* ShaderRHI, const int loopIndex,
-		const FTexture2DRHIRef pReadBuffer, const FSamplerStateRHIRef pReadBuffSampler,
+		const FTextureRHIRef pReadBuffer, const FSamplerStateRHIRef pReadBuffSampler,
 		const FUnorderedAccessViewRHIRef pWriteBuffer)
 	{
 		// Update the Loop index.
@@ -156,7 +160,7 @@ public:
 
 	void SetUVWOffset(FRHICommandListImmediate& RHICmdList, FRHIComputeShader* ShaderRHI, FVector pUVWOffset)
 	{
-		auto fUVWOffset = FVector3f(pUVWOffset);
+		auto fUVWOffset = FVector3d(pUVWOffset);
 		SetShaderValue(RHICmdList, ShaderRHI, UVWOffset, fUVWOffset);
 	}
 
@@ -251,7 +255,7 @@ public:
 
 	// Sets loop-dependent uniforms in the pipeline.
 	void SetLoopAdd(FRHICommandListImmediate& RHICmdList, FRHIComputeShader* ShaderRHI, const int loopIndex,
-		const FTexture2DRHIRef pReadBuffer, const FSamplerStateRHIRef pReadBuffSampler,
+		const FTextureRHIRef pReadBuffer, const FSamplerStateRHIRef pReadBuffSampler,
 		const FUnorderedAccessViewRHIRef pWriteBuffer)
 	{
 		// Update the Loop index.
@@ -263,7 +267,7 @@ public:
 
 	// Sets loop-dependent uniforms in the pipeline.
 	void SetLoop(FRHICommandListImmediate& RHICmdList, FRHIComputeShader* ShaderRHI, const int loopIndex,
-		const FTexture2DRHIRef pRemovedReadBuffer, const FSamplerStateRHIRef pRemovedReadBuffSampler,
+		const FTextureRHIRef pRemovedReadBuffer, const FSamplerStateRHIRef pRemovedReadBuffSampler,
 		const FUnorderedAccessViewRHIRef pRemovedWriteBuffer, const FTexture2DRHIRef pAddedReadBuffer,
 		const FSamplerStateRHIRef pAddedReadBuffSampler, const FUnorderedAccessViewRHIRef pAddedWriteBuffer)
 	{
@@ -296,21 +300,21 @@ public:
 
 	void SetPermutationMatrix(FRHICommandListImmediate& RHICmdList, FRHIComputeShader* ShaderRHI, FMatrix PermMatrix)
 	{
-		SetShaderValue(RHICmdList, ShaderRHI, PermutationMatrix, FMatrix44f(PermMatrix));
+		SetShaderValue(RHICmdList, ShaderRHI, PermutationMatrix, FMatrix44d(PermMatrix));
 	}
 
 	void SetPixelOffsets(FRHICommandListImmediate& RHICmdList, FRHIComputeShader* ShaderRHI, FVector2D AddedPixelOffset,
 		FVector2D RemovedPixelOffset)
 	{
-		SetShaderValue(RHICmdList, ShaderRHI, PrevPixelOffset, FVector2f(AddedPixelOffset));
-		SetShaderValue(RHICmdList, ShaderRHI, RemovedPrevPixelOffset, FVector2f(RemovedPixelOffset));
+		SetShaderValue(RHICmdList, ShaderRHI, PrevPixelOffset, FVector2d(AddedPixelOffset));
+		SetShaderValue(RHICmdList, ShaderRHI, RemovedPrevPixelOffset, FVector2d(RemovedPixelOffset));
 	}
 
 	void SetUVWOffsets(
 		FRHICommandListImmediate& RHICmdList, FRHIComputeShader* ShaderRHI, FVector pAddedUVWOffset, FVector pRemovedUVWOffset)
 	{
-		SetShaderValue(RHICmdList, ShaderRHI, UVWOffset, FVector3f(pAddedUVWOffset));
-		SetShaderValue(RHICmdList, ShaderRHI, RemovedUVWOffset, FVector3f(pRemovedUVWOffset));
+		SetShaderValue(RHICmdList, ShaderRHI, UVWOffset, FVector3d(pAddedUVWOffset));
+		SetShaderValue(RHICmdList, ShaderRHI, RemovedUVWOffset, FVector3d(pRemovedUVWOffset));
 	}
 
 	void SetStepSizes(
@@ -343,8 +347,8 @@ public:
 		SetTextureParameter(RHICmdList, ShaderRHI, RemovedReadBuffer, nullptr);
 	}
 
-	void SetRaymarchResources(FRHICommandListImmediate& RHICmdList, FRHIComputeShader* ShaderRHI, const FTexture3DRHIRef pVolume,
-		const FTexture2DRHIRef pTransferFunc, FWindowingParameters WindowingParams)
+	void SetRaymarchResources(FRHICommandListImmediate& RHICmdList, FRHIComputeShader* ShaderRHI, const FTextureRHIRef pVolume,
+		const FTextureRHIRef pTransferFunc, FWindowingParameters WindowingParams)
 	{
 		// Set the zero color to fit the zero point of the windowing parameters (Center - Width/2)
 		// so that after sampling out of bounds, it gets changed to 0 on the Transfer Function in
@@ -367,8 +371,8 @@ public:
 	void SetRaymarchParameters(FRHICommandListImmediate& RHICmdList, FRHIComputeShader* ShaderRHI,
 		FClippingPlaneParameters LocalClippingParams, FLinearColor pWindowingParameters)
 	{
-		SetShaderValue(RHICmdList, ShaderRHI, LocalClippingCenter, FVector3f(LocalClippingParams.Center));
-		SetShaderValue(RHICmdList, ShaderRHI, LocalClippingDirection, FVector3f(LocalClippingParams.Direction));
+		SetShaderValue(RHICmdList, ShaderRHI, LocalClippingCenter, FVector3d(LocalClippingParams.Center));
+		SetShaderValue(RHICmdList, ShaderRHI, LocalClippingDirection, FVector3d(LocalClippingParams.Direction));
 		SetShaderValue(RHICmdList, ShaderRHI, WindowingParameters, pWindowingParameters);
 	}
 

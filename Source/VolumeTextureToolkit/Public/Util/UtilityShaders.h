@@ -13,11 +13,12 @@
 #include "GlobalShader.h"
 #include "SceneUtils.h"
 #include "Shader.h"
+#include "RHIResources.h"
 #include "ShaderParameterUtils.h"
 #include "ShaderParameters.h"
 
 void VOLUMETEXTURETOOLKIT_API ClearVolumeTexture_RenderThread(
-	FRHICommandListImmediate& RHICmdList, FRHITexture3D* ALightVolumeResource, float ClearValue);
+	FRHICommandListImmediate& RHICmdList, FRHITexture* ALightVolumeResource, float ClearValue);
 
 void VOLUMETEXTURETOOLKIT_API Clear2DTexture_RenderThread(
 	FRHICommandListImmediate& RHICmdList, FRHIUnorderedAccessView* TextureRW, FIntPoint TextureSize, float Value);

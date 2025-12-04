@@ -10,6 +10,7 @@
 #include "RHICommandList.h"
 #include "Rendering/RaymarchTypes.h"
 #include "ShaderParameterUtils.h"
+#include "TextureResource.h"
 #include "ShaderParameters.h"
 
 void GenerateOctreeForVolume_RenderThread(FRHICommandListImmediate& RHICmdList, FBasicRaymarchRenderingResources Resources);
@@ -38,7 +39,7 @@ public:
 		NumberOfMips.Bind(Initializer.ParameterMap, TEXT("NumberOfMips"), SPF_Mandatory);
 	}
 		
-	void SetGeneratingResources(FRHICommandListImmediate& RHICmdList, FRHIComputeShader* ShaderRHI, const FTexture3DRHIRef pVolume,
+	void SetGeneratingResources(FRHICommandListImmediate& RHICmdList, FRHIComputeShader* ShaderRHI, const FTextureRHIRef pVolume,
 		const FTexture3DComputeResource* ComputeResource, int InLeafNodeSize, int InNumberOfMips)
 	{
 		SetTextureParameter(RHICmdList, ShaderRHI, Volume, pVolume);
