@@ -7,7 +7,7 @@ public class FractalMarcher : ModuleRules
 	public FractalMarcher(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
-		CppStandard = CppStandardVersion.Cpp17;
+		CppStandard = CppStandardVersion.Default;
 
 		PublicDependencyModuleNames.AddRange(
 			new string[]

@@ -19,6 +19,7 @@
 #include "ShaderParameterUtils.h"
 #include "Rendering/OctreeShaders.h"
 #include "VolumeTextureToolkit/Public/TextureUtilities.h"
+#include "TextureResource.h"
 
 #include <Engine/TextureRenderTargetVolume.h>
 
@@ -206,11 +207,12 @@ void URaymarchUtils::ReleaseOneAxisReadWriteBufferResources(OneAxisReadWriteBuff
 		UAV = nullptr;
 	}
 
-	for (FTexture2DRHIRef& TextureRef : Buffer.Buffers)
+	for (FRHITexture* TextureRef : Buffer.Buffers)
 	{
 		if (TextureRef)
 		{
-			TextureRef.SafeRelease();
+			// Until i find out what safe release is; its not happenin
+			//TextureRef->SafeRelease();
 		}
 		TextureRef = nullptr;
 	}

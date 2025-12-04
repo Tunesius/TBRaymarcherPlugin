@@ -50,10 +50,9 @@ void APerformanceTest1::Tick(float DeltaSeconds)
 	// Iterate the test. Each if case is played every frame in the TimeWindow.
 	if (CurrentTime < InitializationEnd)
 	{
-		const FString CurrentTestName = TEXT("PerformanceTest1 SetWindowCenter1");
-		if (IsBookmarkNew(CurrentTestName))
+		if (IsBookmarkNew(TEXT("PerformanceTest1 SetWindowCenter1")))
 		{
-			TRACE_BOOKMARK(*CurrentTestName);
+			TRACE_BOOKMARK(TEXT("PerformanceTest1 SetWindowCenter1"));
 		}
 
 		SetWindowCenter(DefaultWindowCenter);
@@ -61,10 +60,9 @@ void APerformanceTest1::Tick(float DeltaSeconds)
 	}
 	else if (CurrentTime < RecomputeTimeEnd)
 	{
-		const FString CurrentTestName = TEXT("PerformanceTest1 RecomputeLights1");
-		if (IsBookmarkNew(CurrentTestName))
+		if (IsBookmarkNew(TEXT("PerformanceTest1 RecomputeLights1")))
 		{
-			TRACE_BOOKMARK(*CurrentTestName);
+			TRACE_BOOKMARK(TEXT("PerformanceTest1 RecomputeLights1"));
 		}
 
 		for (auto* ListenerVolume : ListenerVolumes)
@@ -73,21 +71,19 @@ void APerformanceTest1::Tick(float DeltaSeconds)
 		}
 	}
 	else if (CurrentTime < WindowCenterMovingEnd)
-	{
-		const FString CurrentTestName = TEXT("PerformanceTest1 SetWindowCenter2");
-		if (IsBookmarkNew(CurrentTestName))
+	{		
+		if (IsBookmarkNew(TEXT("PerformanceTest1 SetWindowCenter2")))
 		{
-			TRACE_BOOKMARK(*CurrentTestName);
+			TRACE_BOOKMARK(TEXT("PerformanceTest1 SetWindowCenter2"));
 		}
 
 		SetWindowCenter(DefaultWindowCenter + (CurrentTime - RecomputeTimeEnd) * WindowCenterChangeSpeed);
 	}
 	else if (CurrentTime < SecondRecomputeEnd)
 	{
-		const FString CurrentTestName = TEXT("PerformanceTest1 RecomputeLights2");
-		if (IsBookmarkNew(CurrentTestName))
+		if (IsBookmarkNew(TEXT("PerformanceTest1 RecomputeLights2")))
 		{
-			TRACE_BOOKMARK(*CurrentTestName);
+			TRACE_BOOKMARK(TEXT("PerformanceTest1 RecomputeLights2"));
 		}
 
 		for (auto* ListenerVolume : ListenerVolumes)
@@ -97,10 +93,9 @@ void APerformanceTest1::Tick(float DeltaSeconds)
 	}
 	else if (CurrentTime < RotateCameraEnd)
 	{
-		const FString CurrentTestName = TEXT("PerformanceTest1 RotateCameraAroundVolume");
-		if (IsBookmarkNew(CurrentTestName))
+		if (IsBookmarkNew(TEXT("PerformanceTest1 RotateCameraAroundVolume")))
 		{
-			TRACE_BOOKMARK(*CurrentTestName);
+			TRACE_BOOKMARK(TEXT("PerformanceTest1 RotateCameraAroundVolume"));
 		}
 
 		// Rotate camera around the volume.
@@ -125,10 +120,9 @@ void APerformanceTest1::Tick(float DeltaSeconds)
 	}
 	else if (CurrentTime < RotateVolumeYawEnd)
 	{
-		const FString CurrentTestName = TEXT("PerformanceTest1 RotateVolumeYaw");
-		if (IsBookmarkNew(CurrentTestName))
+		if (IsBookmarkNew(TEXT("PerformanceTest1 RotateVolumeYaw")))
 		{
-			TRACE_BOOKMARK(*CurrentTestName);
+			TRACE_BOOKMARK(TEXT("PerformanceTest1 RotateVolumeYaw"));
 		}
 
 		// Change the rotation of the volume.
@@ -143,10 +137,9 @@ void APerformanceTest1::Tick(float DeltaSeconds)
 	}
 	else if (CurrentTime < RotateVolumeRollEnd)
 	{
-		const FString CurrentTestName = TEXT("PerformanceTest1 RotateVolumeRoll");
-		if (IsBookmarkNew(CurrentTestName))
+		if (IsBookmarkNew(TEXT("PerformanceTest1 RotateVolumeRoll")))
 		{
-			TRACE_BOOKMARK(*CurrentTestName);
+			TRACE_BOOKMARK(TEXT("PerformanceTest1 RotateVolumeRoll"));
 		}
 
 		// Change the rotation of the volume.
@@ -161,10 +154,9 @@ void APerformanceTest1::Tick(float DeltaSeconds)
 	}
 	else if (CurrentTime < RotatePlaneRollEnd)
 	{
-		const FString CurrentTestName = TEXT("PerformanceTest1 RotatePlaneRoll");
-		if (IsBookmarkNew(CurrentTestName))
+		if (IsBookmarkNew(TEXT("PerformanceTest1 RotatePlaneRoll")))
 		{
-			TRACE_BOOKMARK(*CurrentTestName);
+			TRACE_BOOKMARK(TEXT("PerformanceTest1 RotatePlaneRoll"));
 		}
 
 		// Change the rotation of the plane.
@@ -179,12 +171,10 @@ void APerformanceTest1::Tick(float DeltaSeconds)
 	}
 	else if (CurrentTime < RotatePlaneYawEnd)
 	{
-		const FString CurrentTestName = TEXT("PerformanceTest1 RotatePlaneYaw");
-		if (IsBookmarkNew(CurrentTestName))
+		if (IsBookmarkNew(TEXT("PerformanceTest1 RotatePlaneYaw")))
 		{
-			TRACE_BOOKMARK(*CurrentTestName);
+			TRACE_BOOKMARK(TEXT("PerformanceTest1 RotatePlaneYaw"));
 		}
-
 		// Change the rotation of the plane.
 		AActor* Plane = PlaneToRotate;
 		if (!Plane)
